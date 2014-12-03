@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="base.css"/>
+    <style>
+        span.highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var div = document.body.lastElementChild;
+            var inital_string = div.innerHTML;
+
+
+            document.body.firstElementChild.addEventListener('input', function (event) {
+                console.log(this.value);
+                div.innerHTML = inital_string.replace(new RegExp(this.value, 'gmi'),
+                        '<span class="highlight">' + this.value + '</span>');
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text"/>
+    <div>
+        Create an HTML page with a div element and an input box. Upon typing into the input box,
+        the matching words within the div should be highlighted with a yellow background and
+        bold text. Place random text within the div element for testing.
+    </div>
+</body>
+</html>

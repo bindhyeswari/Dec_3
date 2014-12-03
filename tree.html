@@ -27,26 +27,37 @@
             var div = document.createElement('div');
 
             // loop over all the children of the body and create cloned structure on the div
-            recursiveBuild(div, document.body);
+            recursiveBuild(div, document.body, 0);
 
-            function recursiveBuild(parent_parallel, parent) {
+
+            function recursiveBuild(parent_parallel, parent, level) {
                 var children = parent.children;
+                ++level;
                 for (var i = 0, len = children.length; i < len; i++) {
                     var child = children[i];
                     var element = document.createElement('div');
-                    element.innerHTML = '[+]' + child.tagName;
+                    element.innerHTML = '-'.repeat(level) + '[+]' + child.tagName; // repeat works in ES6 only
                     element.className = 'collapsed';
                     parent_parallel.appendChild(element);
-                    recursiveBuild(element, child);
+                    recursiveBuild(element, child, level);
                 }
             }
 
             console.log(div);
 
-            document.body.firstElementChild.addEventListener('click', function (event) {
-                console.log(this.className);
-                this.className = (this.className === 'collapsed') ? '' : 'collapsed';
+            document.body.appendChild(div);
+
+            var collapsed_elements = document.body.getElementsByClassName('collapsed');
+
+            console.log(collapsed_elements);
+
+            div.addEventListener('click', function(event) {
+                // this / event.target
+                event.target.className = event.target.className === 'collapsed' ? 'expanded' : 'collapsed';
             });
+
+            console.log(document.querySelector('#nav'));
+
         });
 
     </script>
@@ -64,7 +75,7 @@
         </div>
     </div>
     <div>
-
+        <div id="nav"></div>
     </div>
 </body>
 </html>
